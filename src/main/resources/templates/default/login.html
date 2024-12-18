@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - HJob</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-primary" href="/">HJob</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Đăng Nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Đăng Ký</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center text-primary mb-4">Đăng Nhập</h2>
+            <form th:action="@{/login}"  method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Tên đăng nhập</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Đăng Nhập</button>
+                    <a href="/register" class="btn btn-link">Đăng Ký</a>
+                </div>
+                <!-- Thông báo lỗi nếu có -->
+                <div class="alert alert-danger mt-2" style="display: none;" id="loginError">
+                    Đăng nhập không thành công. Vui lòng kiểm tra lại tên đăng nhập và mật khẩu.
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-light py-4 mt-5">
+    <div class="container text-center">
+        <p class="mb-0">2024 HJob. Nguyễn Đức Huy - 20105761</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Kiểm tra nếu có lỗi đăng nhập
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('error')) {
+        document.getElementById('loginError').style.display = 'block';
+    }
+</script>
+</body>
+</html>

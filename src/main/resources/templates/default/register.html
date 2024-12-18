@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký - HJob</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Thanh điều hướng -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-primary" href="/">HJob</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Đăng Nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Đăng Ký</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Form Đăng Ký -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center text-primary mb-4">Đăng Ký</h2>
+
+            <!-- Hiển thị lỗi nếu có -->
+            <div th:if="${error}" class="alert alert-danger">
+                <p th:text="${error}"></p>
+            </div>
+
+            <form th:action="@{/register}" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Tên đăng nhập</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="mb-3">
+                    <label for="role" class="form-label">Vai trò</label>
+                    <select class="form-control" id="role" name="role" required>
+                        <option value="CANDIDATE">Ứng viên</option>
+                        <option value="COMPANY">Công ty</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Đăng Ký</button>
+            </form>
+            <p class="text-center mt-3">Bạn đã có tài khoản? <a href="/login">Đăng nhập ngay</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-light py-4 mt-5">
+    <div class="container text-center">
+        <p class="mb-0">2024 HJob. Nguyễn Đức Huy - 20105761</p>
+    </div>
+</footer>
+
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

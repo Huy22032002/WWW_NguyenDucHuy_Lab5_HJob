@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggested Skills</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .table th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Kỹ Năng Được Đề Xuất Cho Bạn</h2>
+
+    <!-- Candidate Information -->
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            Thông Tin Ứng Viên
+        </div>
+        <div class="card-body">
+            <p><strong>Tên:</strong> <span th:text="${candidate.fullName}">Candidate Name</span></p>
+            <p><strong>ID:</strong> <span th:text="${candidate.id}">1</span></p>
+        </div>
+    </div>
+
+    <!-- Suggested Skills Table -->
+    <div class="card mt-4">
+        <div class="card-header bg-success text-white">
+            Danh Sách Kỹ Năng Được Đề Xuất
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tên Kỹ Năng</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Loop through suggested skills -->
+                <tr th:each="skill, iterStat : ${suggestedSkills}">
+                    <td th:text="${iterStat.index + 1}">1</td>
+                    <td th:text="${skill.skillName}">Skill Name</td>
+                </tr>
+                <!-- If no skills are found -->
+                <tr th:if="${#lists.isEmpty(suggestedSkills)}">
+                    <td colspan="2" class="text-center text-danger">Không có kỹ năng nào được đề xuất!</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <a th:href="@{/candidate/home}" class="btn btn-secondary">Quay Lại</a>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

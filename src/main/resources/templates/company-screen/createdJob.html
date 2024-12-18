@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Tin Tuyển Dụng</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons (để sử dụng biểu tượng trong nút thêm/xóa kỹ năng) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        .skill-item {
+            position: relative;
+            padding: 25px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #ffffff;
+            margin-bottom: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+    <script>
+        let skillIndex = 0; // Để đánh số các kỹ năng
+
+        function addSkillField() {
+            const skillsContainer = document.getElementById('skillsContainer');
+
+            const skillItem = document.createElement('div');
+            skillItem.classList.add('skill-item');
+
+            // Sử dụng innerHTML để chèn nội dung cho skill item
+            skillItem.innerHTML = `
+                <div class="mb-3">
+                    <label for="skillName_${skillIndex}" class="form-label required">Tên Kỹ Năng</label>
+                    <input type="text" class="form-control" id="skillName_${skillIndex}" name="skillNames[]" placeholder="Nhập tên kỹ năng" required>
+                </div>
+                <div class="mb-3">
+                    <label for="skillType_${skillIndex}" class="form-label required">Loại Kỹ Năng</label>
+                    <select class="form-select" id="skillType_${skillIndex}" name="skillTypes[]" required>
+                        <option value="" disabled selected>Chọn loại kỹ năng</option>
+                        <option value="1">Soft Skill</option>
+                        <option value="2">Technical Skill</option>
+                        <option value="3">Unspecified</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="skillDesc_${skillIndex}" class="form-label required">Mô Tả Kỹ Năng</label>
+                    <textarea class="form-control" id="skillDesc_${skillIndex}" name="skillDescs[]" rows="3" placeholder="Nhập mô tả kỹ năng" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="skillLevel_${skillIndex}" class="form-label required">Mức Độ Kỹ Năng</label>
+                    <select class="form-select" id="skillLevel_${skillIndex}" name="skillLevels[]" required>
+                        <option value="" disabled selected>Chọn mức độ kỹ năng</option>
+                        <option value="BEGINNER">Beginner</option>
+                        <option value="INTERMEDIATE">Intermediate</option>
+                        <option value="ADVANCED">Advanced</option>
+                        <option value="PROFESSIONAL">Professional</option>
+                        <option value="EXPERT">Expert</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="moreInfos_${skillIndex}" class="form-label">Thông Tin Thêm</label>
+                    <textarea class="form-control" id="moreInfos_${skillIndex}" name="moreInfos[]" rows="3" placeholder="Nhập thông tin thêm (nếu có)"></textarea>
+                </div>
+            `;
+
+            skillsContainer.appendChild(skillItem);
+            skillIndex++;
+        }
+
+        function validateForm() {
+            // Nếu bạn cần thêm logic kiểm tra, hãy thêm ở đây.
+            return true;
+        }
+
+        // Thêm một kỹ năng mặc định khi trang tải
+        window.onload = function() {
+            addSkillField();
+        };
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #007bff;">
+    <div class="container">
+        <a class="navbar-brand" href="/company/home">HJob</a>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Đăng Tin Tuyển Dụng</h2>
+    <form method="post" th:action="@{/company/createJob}" onsubmit="return validateForm()">
+        <!-- Tên Công Việc -->
+        <div class="mb-3">
+            <label for="jobName" class="form-label required">Tên Công Việc</label>
+            <input type="text" class="form-control" id="jobName" name="jobName" required>
+        </div>
+
+        <!-- Mô Tả Công Việc -->
+        <div class="mb-3">
+            <label for="jobDesc" class="form-label required">Mô Tả Công Việc</label>
+            <textarea class="form-control" id="jobDesc" name="jobDesc" rows="4" required></textarea>
+        </div>
+        <!-- Hình Thức Công Việc -->
+        <div class="mb-3">
+            <label for="jobType" class="form-label required">Hình Thức Công Việc</label>
+            <select class="form-select" id="jobType" name="jobType" required>
+                <option value="" disabled selected>Chọn hình thức công việc</option>
+                <option value="FULL_TIME">Full-Time</option>
+                <option value="PART_TIME">Part-Time</option>
+                <option value="FREELANCE">Freelance</option>
+            </select>
+        </div>
+
+        <!-- Lương -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="salaryRangeMin" class="form-label required">Lương Từ</label>
+                <input type="number" step="0.01" class="form-control" id="salaryRangeMin" name="salaryRangeMin" required>
+            </div>
+            <div class="col-md-6">
+                <label for="salaryRangeMax" class="form-label required">Lương Đến</label>
+                <input type="number" step="0.01" class="form-control" id="salaryRangeMax" name="salaryRangeMax" required>
+            </div>
+        </div>
+
+        <!-- Kỹ Năng Yêu Cầu -->
+        <div class="mb-3">
+            <label class="form-label required">Kỹ Năng Yêu Cầu</label>
+            <div id="skillsContainer"></div>
+            <button type="button" class="btn btn-success mt-3" onclick="addSkillField()">
+                <i class="bi bi-plus-circle me-2"></i> Thêm Kỹ Năng
+            </button>
+        </div>
+
+        <!-- Nút Đăng Tuyển -->
+        <button type="submit" class="btn btn-primary">Đăng Tuyển</button>
+    </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
